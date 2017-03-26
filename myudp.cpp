@@ -20,5 +20,18 @@ void MyUDP::readyRead()
     quint16 port;
 
     socket->readDatagram(buf.data(), buf.size(), &addr, &port);
-    qDebug() << "Message: " << buf;
+    qDebug() << "buf:" << buf.data();
+    QList<QString> users;
+    QString mess = QString::fromStdString(buf.toStdString());
+    if (mess.lastIndexOf("@:")==-1){
+
+        users.append(mess);
+        qDebug() << users;
+    }
+    else{
+        QString author= mess.left(mess.indexOf("@:"));
+        QString author_message= mess.mid(mess.indexOf("@:")+2);
+        qDebug() << "message" << author_message;
+        qDebug() << "user" <<author;
+    }
 }
